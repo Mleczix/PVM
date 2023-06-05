@@ -1,5 +1,7 @@
 #include "BuildingAreaCalculator.h"
 
+#define SCALE 10
+
 namespace SX::Building::Calculator
 {
     BuildingAreaCalculator::BuildingAreaCalculator() : m_pixelsNumber(0)
@@ -38,9 +40,9 @@ namespace SX::Building::Calculator
         }
     }
 
-    void BuildingAreaCalculator::calculateTotalArea()
+    const size_t BuildingAreaCalculator::calculateTotalArea()
     {
-        // TODO take num of pixels and multiply by scale
+        return getPixelsNumber() * SCALE;
     }
 
     const size_t BuildingAreaCalculator::getPixelsNumber()

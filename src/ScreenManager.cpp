@@ -25,7 +25,7 @@ namespace SX::ScreenManager
         }
     }
 
-    void ScreenManager::drawBMPOnWindow(int width, int height, shared_ptr<SDL_Surface> bmp)
+    void ScreenManager::drawBMPOnWindow(int width, int height, shared_ptr<SDL_Surface> bmp, time start)
     {
         for (int y = 0; y < height; y++)
         {
@@ -40,7 +40,15 @@ namespace SX::ScreenManager
         }
         m_callback();
 
-        printf("ilosc pikseli: %ld\n", m_buildingAreaCalculator.getPixelsNumber());
+        auto end = std::chrono::high_resolution_clock::now();
+
+        auto diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+
+        //printf("ilosc pikseli: %ld\n", m_buildingAreaCalculator.getPixelsNumber());
+        int ciulik[2] = { m_buildingAreaCalculator.calculateTotalArea(), diff };
+        pvm_initsend(PvmDataDefault);
+        pvm_pkint(ciulik, 2, 1);
+        pvm_send(pvm_parent(), 0);
         // TODO line above is needed only for testing so far
         m_buildingAreaCalculator.setPixelNumber(0); 
         //should be managed by destructor but im too lazy to do that in SDLWindow.cpp

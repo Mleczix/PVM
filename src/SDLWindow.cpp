@@ -17,12 +17,13 @@ namespace SX::SDLWindow
     void SDLWindow::start(int MIN, int MAX)
     {
         for(int i = MIN; i < MAX; i++) {
+            auto start = std::chrono::high_resolution_clock::now();
             m_imgReader.loadBMP("graphicsImages/" + std::to_string(i + 1) + ".bmp");
             createWindowWithBMP();
             m_screenManager.registerCallback([this](){this->update();});
             m_screenManager.init(m_window);
-            m_screenManager.drawBMPOnWindow(m_imgReader.getWidth(), m_imgReader.getHeight(), m_imgReader.getBitmap());
-            //probably best way is to create new instance of screenManager::m_buildingAreaCalculator for each picture
+            m_screenManager.drawBMPOnWindow(m_imgReader.getWidth(), m_imgReader.getHeight(), m_imgReader.getBitmap(), start);
+            //probably best way is to create new instance of screenManager::m_buildingAreaCalcultor for each picture
         }
     }
 

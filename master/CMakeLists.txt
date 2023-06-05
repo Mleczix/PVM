@@ -6,6 +6,11 @@ set(SOURCES
 add_executable(master ${SOURCES})
 
 target_link_libraries(master pvm3)
+target_link_libraries(master pvm3 stdc++)
+
+
+
+add_definitions(-std=c++20)
 
 set (OUTPUT_DIR
     ${CMAKE_SOURCE_DIR}/output

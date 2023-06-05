@@ -7,6 +7,9 @@ int main()
     int childrenIds[1];
     const int index = numOfFiles / numOfProcesses;
 
+    pvm_catchout(stdout);
+
+
     if((masterId = pvm_mytid()) < 0) 
         pvm_perror("Error occured: Could not create master PVM process");
     
@@ -28,6 +31,23 @@ int main()
         if((createdProcesses = pvm_spawn("slave", argsv, PvmTaskDefault, "", 1, childrenIds)) < 0) 
             pvm_perror("Error occured: Could not create child PVM process");
 
+    }
+
+    for(int i = 0; i < numOfProcesses; i++) {
+        int cont = 1;
+        while(cont) {
+            for(int j = 0; j < createdProcesses; j++) {
+                int recv_result = pvm_nrecv(childrenIds[j], 0);
+                if(recv_result) {
+                    cont = 0;
+                    break;
+                }
+            }
+        }
+
+        int numbers[2] = {0, 0};
+        pvm_upkint(numbers, 2, 1);
+        std::cout<< "obrazek nr " << i << ", pole: " << numbers[0] << ", czas: " << numbers[1] << " mikrosekund" << std::endl;
     }
 
     pvm_exit();

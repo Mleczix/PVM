@@ -15,7 +15,7 @@ namespace SX::Building::Calculator
         BuildingAreaCalculator();
         ~BuildingAreaCalculator();
         void compareColors(const SDL_Color &color_in);
-        void calculateTotalArea();
+        const size_t calculateTotalArea();
         bool compareBuildingColors(const SDL_Color &color_in);
         bool compareBuildingEdgeColors(const SDL_Color &color_in);
         const size_t getPixelsNumber();

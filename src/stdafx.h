@@ -9,6 +9,7 @@
 #include <exception>
 #include <math.h>
 #include <memory>
+#include <chrono>
 #include <SDL2/SDL.h>
 #include <functional>
 #include <pvm3.h>
